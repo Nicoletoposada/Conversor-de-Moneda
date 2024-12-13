@@ -7,13 +7,22 @@ package com.mycompany.conversor.de.moneda;
 public class ApiResponse {
     private String result;
     private String base_code;
-    private Rates rates;
+    private Rates conversion_rates;
 
     public String getBase() {
         return base_code;
     }
 
     public Rates getRates() {
-        return rates;
+        return conversion_rates;
+    }
+
+    @Override
+    public String toString() {
+        return "ApiResponse{" +
+                "result='" + result + '\'' +
+                ", base_code='" + base_code + '\'' +
+                ", rates=" + conversion_rates +
+                '}';
     }
 }

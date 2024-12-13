@@ -35,4 +35,16 @@ public class Rates {
     public double getUSD() {
         return USD;
     }
+
+    @Override
+    public String toString() {
+        return "Rates{" +
+                "ARS=" + ARS +
+                ", BOB=" + BOB +
+                ", BRL=" + BRL +
+                ", CLP=" + CLP +
+                ", COP=" + COP +
+                ", USD=" + USD +
+                '}';
+    }
 }

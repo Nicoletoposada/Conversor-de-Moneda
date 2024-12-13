@@ -9,6 +9,7 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpHeaders;
 import java.net.URI;
 import com.google.gson.Gson;
+import java.util.Scanner;
 
 public class ConversorDeMoneda {
     public static void main(String[] args) {
@@ -40,15 +41,36 @@ public class ConversorDeMoneda {
                 Gson gson = new Gson();
                 ApiResponse apiResponse = gson.fromJson(responseBody, ApiResponse.class);
 
-                System.out.println("Base: " + apiResponse.getBase());
+                // Imprimir ApiResponse para verificar la estructura
+                System.out.println("ApiResponse: " + apiResponse);
 
                 if (apiResponse.getRates() != null) {
+                    System.out.println("Base: " + apiResponse.getBase());
                     System.out.println("ARS Rate: " + apiResponse.getRates().getARS());
                     System.out.println("BOB Rate: " + apiResponse.getRates().getBOB());
                     System.out.println("BRL Rate: " + apiResponse.getRates().getBRL());
                     System.out.println("CLP Rate: " + apiResponse.getRates().getCLP());
                     System.out.println("COP Rate: " + apiResponse.getRates().getCOP());
                     System.out.println("USD Rate: " + apiResponse.getRates().getUSD());
+
+                    // Lógica de conversión
+                    Scanner scanner = new Scanner(System.in);
+
+                    System.out.print("Ingrese la cantidad en USD: ");
+                    double amountInUSD = scanner.nextDouble();
+
+                    double amountInARS = convertCurrency(amountInUSD, apiResponse.getRates().getUSD(), apiResponse.getRates().getARS());
+                    double amountInBOB = convertCurrency(amountInUSD, apiResponse.getRates().getUSD(), apiResponse.getRates().getBOB());
+                    double amountInBRL = convertCurrency(amountInUSD, apiResponse.getRates().getUSD(), apiResponse.getRates().getBRL());
+                    double amountInCLP = convertCurrency(amountInUSD, apiResponse.getRates().getUSD(), apiResponse.getRates().getCLP());
+                    double amountInCOP = convertCurrency(amountInUSD, apiResponse.getRates().getUSD(), apiResponse.getRates().getCOP());
+
+                    System.out.println(amountInUSD + " USD es equivalente a:");
+                    System.out.println(amountInARS + " ARS");
+                    System.out.println(amountInBOB + " BOB");
+                    System.out.println(amountInBRL + " BRL");
+                    System.out.println(amountInCLP + " CLP");
+                    System.out.println(amountInCOP + " COP");
                 } else {
                     System.out.println("Error: No se pudieron obtener las tasas de cambio.");
                 }
@@ -58,5 +80,10 @@ public class ConversorDeMoneda {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // Método para convertir monedas
+    public static double convertCurrency(double amount, double rateFrom, double rateTo) {
+        return amount * (rateTo / rateFrom);
     }
 }
