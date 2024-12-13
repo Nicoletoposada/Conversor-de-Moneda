@@ -9,10 +9,12 @@ public class ApiResponse {
     private String base_code;
     private Rates conversion_rates;
 
+    // Obtener la moneda base
     public String getBase() {
         return base_code;
     }
 
+    // Obtener las tasas de conversión
     public Rates getRates() {
         return conversion_rates;
     }

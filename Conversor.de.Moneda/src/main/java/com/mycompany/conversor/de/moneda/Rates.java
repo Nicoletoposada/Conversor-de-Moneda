@@ -12,6 +12,7 @@ public class Rates {
     private double COP;
     private double USD;
 
+    // Métodos getter para cada tasa de cambio
     public double getARS() {
         return ARS;
     }

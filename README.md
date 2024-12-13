@@ -1,89 +1,97 @@
-# Conversor de Monedas
+# Conversor de Moneda
 
-Este proyecto es un desafío práctico para desarrollar un conversor de monedas que consuma una API de tipos de cambio, implementado en Java. El objetivo es poner en práctica conocimientos de Java, consumo de APIs y desarrollo de aplicaciones, siguiendo una metodología ágil.
+Este proyecto es una aplicación en Java que permite convertir valores en USD (dólares estadounidenses) a varias monedas, como ARS, BOB, BRL, CLP y COP, utilizando tasas de cambio obtenidas a través de la API de [ExchangeRate-API](https://www.exchangerate-api.com/).
 
 ## Características
 
-- Consumo de la API de [Exchange Rate](https://exchangeratesapi.io/).
-- Conversión entre múltiples monedas.
-- Interfaz de usuario en consola.
-- Manejo de errores para entradas no válidas y problemas con la API.
-- Historial de conversiones (opcional).
+- Obtención de tasas de cambio actualizadas mediante solicitudes HTTP.
+- Conversión de USD a otras monedas soportadas.
+- Interfaz de menú interactiva para que el usuario seleccione la conversión deseada.
+- Validación de las tasas de cambio obtenidas para garantizar la precisión de los resultados.
 
-## Requisitos Previos
+## Tecnologías y Bibliotecas
 
-Antes de comenzar, asegúrate de tener lo siguiente:
+- **Java**: Lenguaje principal para el desarrollo del proyecto.
+- **HttpClient**: Para realizar solicitudes HTTP.
+- **Gson**: Para manejar y deserializar las respuestas JSON de la API.
+- **Maven**: Para la gestión de dependencias y construcción del proyecto.
 
-- [Java JDK](https://www.oracle.com/java/technologies/javase-downloads.html) instalado.
-- Un IDE como [IntelliJ IDEA](https://www.jetbrains.com/idea/) o [Eclipse](https://www.eclipse.org/).
-- Una cuenta en GitHub para el repositorio del proyecto.
-- Conexión a Internet para consumir la API.
+## Requisitos
 
-## Instalación y Configuración
+- Java 8 o superior.
+- Maven instalado.
+- Conexión a internet para acceder a la API de tasas de cambio.
 
-1. **Clonar el repositorio**
+## Instalación y Ejecución
+
+1. **Clona este repositorio**:
    ```bash
-   git clone https://github.com/tu-usuario/conversor-monedas.git
+   git clone <URL-del-repositorio>
+   cd conversor-de-moneda
    ```
-2. **Configurar el entorno**
-   - Asegúrate de que tu IDE esté configurado para usar Java.
-   - Configura las dependencias necesarias, como bibliotecas para realizar solicitudes HTTP.
 
-3. **Obtener la clave de API**
-   - Regístrate en [Exchange Rate API](https://exchangeratesapi.io/) para obtener una clave de API.
-   - Configura la clave de API en el archivo de configuración del proyecto (por ejemplo, `config.properties`).
+2. **Configura tu API Key**:
+   - Abre el archivo `ConversorDeMoneda.java`.
+   - Reemplaza `6f7ea3ba3e2518c15787e93c` con tu propia API Key obtenida de [ExchangeRate-API](https://www.exchangerate-api.com/).
 
-## Uso
-
-1. Ejecuta la aplicación desde tu IDE o consola:
+3. **Compila el proyecto**:
    ```bash
-   java -jar conversor-monedas.jar
+   mvn compile
    ```
-2. Sigue las instrucciones en pantalla para:
-   - Seleccionar la moneda de origen.
-   - Seleccionar la moneda de destino.
-   - Ingresar el monto a convertir.
 
-## Metodología Ágil
-
-Este proyecto se organiza siguiendo los principios ágiles:
-
-- **Trello:** Utilizado para organizar las tareas. Las tarjetas incluyen subtareas como configurar el entorno, implementar la lógica de consumo de la API, crear la interfaz de usuario y manejar errores.
+4. **Ejecúta la aplicación**:
+   ```bash
+   mvn exec:java -Dexec.mainClass="ConversorDeMoneda"
+   ```
 
 ## Estructura del Proyecto
 
-```
-conversor-monedas/
-|-- src/
-|   |-- Main.java
-|   |-- ApiService.java
-|   |-- Converter.java
-|   |-- UI.java
-|-- resources/
-|   |-- config.properties
-|-- README.md
-|-- .gitignore
-|-- pom.xml (si usas Maven)
+- **`ConversorDeMoneda.java`**: Clase principal que maneja las solicitudes HTTP, deserializa las respuestas y proporciona la interfaz de menú.
+- **`ApiResponse.java`**: Clase para modelar la respuesta de la API.
+- **`Rates.java`**: Clase para modelar las tasas de cambio dentro de la respuesta de la API.
+- **`pom.xml`**: Archivo de configuración de Maven.
+
+## Uso
+
+1. Ejecuta la aplicación.
+2. Selecciona una opción del menú para realizar una conversión de moneda:
+   - 1: USD a ARS
+   - 2: USD a BOB
+   - 3: USD a BRL
+   - 4: USD a CLP
+   - 5: USD a COP
+   - 6: Salir
+3. Ingresa la cantidad en USD que deseas convertir.
+4. Visualiza el resultado de la conversión.
+
+## Ejemplo de Ejecución
+```plaintext
+Código de estado: 200
+JSON de respuesta: {"base_code":"USD", "conversion_rates":{"ARS":350.25, "BOB":6.91, ...}}
+Base: USD
+ARS Rate: 350.25
+Ingrese la cantidad en USD: 100
+100 USD es equivalente a 35025.0 ARS
 ```
 
-## Funcionalidades Futuras
+## Dependencias
 
-- Implementar una interfaz gráfica de usuario (GUI).
-- Soporte para más APIs de tipos de cambio.
-- Configuración regional para mostrar resultados en diferentes formatos.
+El archivo `pom.xml` incluye las siguientes dependencias:
+
+- **Gson**: Manejo de JSON.
+- **HttpClient**: Realizar solicitudes HTTP.
 
 ## Contribuciones
 
-Si deseas contribuir al proyecto:
+Si deseas contribuir a este proyecto, por favor sigue estos pasos:
+
 1. Haz un fork del repositorio.
-2. Crea una rama para tu funcionalidad: `git checkout -b nueva-funcionalidad`.
-3. Realiza los cambios y realiza un commit: `git commit -m "Agrega nueva funcionalidad"`.
-4. Envía un pull request.
+2. Crea una rama para tu función (`git checkout -b nueva-funcion`).
+3. Realiza tus cambios y haz commit (`git commit -m 'Agregada nueva función'`).
+4. Haz push a la rama (`git push origin nueva-funcion`).
+5. Abre un Pull Request.
 
-## Licencia
+## Autor
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Desarrollado por Nicolás Posada García para Aluta Latam.
 
----
-
-¡Gracias por tu interés en este proyecto! Si tienes preguntas o sugerencias, no dudes en abrir un issue en GitHub.
