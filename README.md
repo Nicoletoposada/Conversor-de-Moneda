@@ -93,5 +93,5 @@ Si deseas contribuir a este proyecto, por favor sigue estos pasos:
 
 ## Autor
 
-Desarrollado por Nicolás Posada García para Aluta Latam.
+Desarrollado por Nicolás Posada García para Alura Latam.
 
