@@ -14,12 +14,11 @@ public class ConversorDeMoneda {
     public static void main(String[] args) {
         try {
             HttpClient client = HttpClient.newHttpClient();
-            URI uri = new URI("https://api.tasasdecambio.com/latest?base=USD&symbols=ARS,BOB,BRL,CLP,COP,USD");
+            URI uri = new URI("https://v6.exchangerate-api.com/v6/6f7ea3ba3e2518c15787e93c/latest/USD");
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
                     .header("Accept", "application/json")
-                    .header("Authorization", "Bearer 6f7ea3ba3e2518c15787e93c")
                     .GET()
                     .build();
 
@@ -30,6 +29,9 @@ public class ConversorDeMoneda {
             if (statusCode == 200) {
                 String responseBody = response.body();
                 
+                // Imprimir respuesta JSON completa para verificar estructura
+                System.out.println("JSON de respuesta: " + responseBody);
+
                 HttpHeaders headers = response.headers();
                 headers.map().forEach((key, values) -> {
                     System.out.println(key + ": " + values);
@@ -39,63 +41,22 @@ public class ConversorDeMoneda {
                 ApiResponse apiResponse = gson.fromJson(responseBody, ApiResponse.class);
 
                 System.out.println("Base: " + apiResponse.getBase());
-                System.out.println("ARS Rate: " + apiResponse.getRates().getARS());
-                System.out.println("BOB Rate: " + apiResponse.getRates().getBOB());
-                System.out.println("BRL Rate: " + apiResponse.getRates().getBRL());
-                System.out.println("CLP Rate: " + apiResponse.getRates().getCLP());
-                System.out.println("COP Rate: " + apiResponse.getRates().getCOP());
-                System.out.println("USD Rate: " + apiResponse.getRates().getUSD());
+
+                if (apiResponse.getRates() != null) {
+                    System.out.println("ARS Rate: " + apiResponse.getRates().getARS());
+                    System.out.println("BOB Rate: " + apiResponse.getRates().getBOB());
+                    System.out.println("BRL Rate: " + apiResponse.getRates().getBRL());
+                    System.out.println("CLP Rate: " + apiResponse.getRates().getCLP());
+                    System.out.println("COP Rate: " + apiResponse.getRates().getCOP());
+                    System.out.println("USD Rate: " + apiResponse.getRates().getUSD());
+                } else {
+                    System.out.println("Error: No se pudieron obtener las tasas de cambio.");
+                }
             } else {
                 System.out.println("Error: " + statusCode);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-}
-
-class ApiResponse {
-    private String base;
-    private Rates rates;
-
-    public String getBase() {
-        return base;
-    }
-
-    public Rates getRates() {
-        return rates;
-    }
-}
-
-class Rates {
-    private double ARS;
-    private double BOB;
-    private double BRL;
-    private double CLP;
-    private double COP;
-    private double USD;
-
-    public double getARS() {
-        return ARS;
-    }
-
-    public double getBOB() {
-        return BOB;
-    }
-
-    public double getBRL() {
-        return BRL;
-    }
-
-    public double getCLP() {
-        return CLP;
-    }
-
-    public double getCOP() {
-        return COP;
-    }
-
-    public double getUSD() {
-        return USD;
     }
 }
